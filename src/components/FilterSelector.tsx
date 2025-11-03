@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { TogglService } from '../services/togglService';
 import type { TogglAccount, FilterConfig, Workspace, Client, Project, Tag } from '../types';
 import './FilterSelector.css';
@@ -9,7 +9,7 @@ interface FilterSelectorProps {
   onRemove: () => void;
 }
 
-export const FilterSelector: React.FC<FilterSelectorProps> = ({
+export const FilterSelector = ({
   account,
   onFilterChange,
   onRemove,

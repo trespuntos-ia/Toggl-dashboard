@@ -1,4 +1,3 @@
-import React from 'react';
 import type { TimeEntryResult } from '../types';
 import './ResultsTable.css';
 
@@ -7,7 +6,7 @@ interface ResultsTableProps {
   loading: boolean;
 }
 
-export const ResultsTable: React.FC<ResultsTableProps> = ({ results, loading }) => {
+export const ResultsTable = ({ results, loading }: ResultsTableProps) => {
   const formatDuration = (seconds: number): string => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);

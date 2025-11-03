@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { storageService } from '../services/storageService';
 import type { TogglAccount } from '../types';
 import './AccountManager.css';
@@ -8,7 +8,7 @@ interface AccountManagerProps {
   selectedAccounts: TogglAccount[];
 }
 
-export const AccountManager: React.FC<AccountManagerProps> = ({
+export const AccountManager = ({
   onAccountSelect,
   selectedAccounts,
 }) => {

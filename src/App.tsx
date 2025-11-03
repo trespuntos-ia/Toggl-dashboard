@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { AccountManager } from './components/AccountManager';
 import { FilterSelector } from './components/FilterSelector';
 import { ResultsTable } from './components/ResultsTable';
