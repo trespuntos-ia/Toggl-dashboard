@@ -1,0 +1,24 @@
+# Backend
+backend/.env
+backend/vendor/
+backend/node_modules/
+backend/storage/*.key
+backend/public/hot
+backend/public/storage
+backend/.phpunit.result.cache
+backend/database/database.sqlite
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.vscode/
+frontend/.idea/
+
+# General
+.DS_Store
+*.log
+.env
+.env.local
+.env.production
+.env.development
