@@ -11,7 +11,7 @@ interface AccountManagerProps {
 export const AccountManager = ({
   onAccountSelect,
   selectedAccounts,
-}) => {
+}: AccountManagerProps) => {
   const [accounts, setAccounts] = useState<TogglAccount[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [accountName, setAccountName] = useState('');
@@ -48,7 +48,7 @@ export const AccountManager = ({
   const handleDeleteAccount = (accountId: string) => {
     if (confirm('¿Estás seguro de que quieres eliminar esta cuenta?')) {
       storageService.removeAccount(accountId);
-      setAccounts(accounts.filter(acc => acc.id !== accountId));
+      setAccounts(accounts.filter((acc: TogglAccount) => acc.id !== accountId));
     }
   };
 

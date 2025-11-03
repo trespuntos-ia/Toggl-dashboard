@@ -13,7 +13,7 @@ export const FilterSelector = ({
   account,
   onFilterChange,
   onRemove,
-}) => {
+}: FilterSelectorProps) => {
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
