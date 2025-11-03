@@ -1,76 +1,88 @@
-# Toggl Dashboard
+# 📊 Toggl Dashboard
 
-Aplicación web para gestionar múltiples cuentas de Toggl y visualizar tiempos de trabajo de forma consolidada.
+Una aplicación React moderna para gestionar y visualizar tiempos de múltiples cuentas de Toggl en un solo lugar.
 
-## Estructura del Proyecto
+## ✨ Características
 
-- `backend/`: API REST desarrollada con Laravel
-- `frontend/`: Aplicación web desarrollada con Angular
+- ✅ **Gestión de múltiples cuentas**: Añade y guarda varias cuentas de Toggl
+- ✅ **Filtros avanzados**: Selecciona workspace, cliente, proyecto y tag para cada cuenta
+- ✅ **Vista consolidada**: Combina resultados de múltiples cuentas en una sola tabla
+- ✅ **Información completa**: Muestra responsable, descripción, duración, fechas y más
+- ✅ **Almacenamiento local**: Las cuentas se guardan en tu navegador de forma segura
 
-## Características
+## 🚀 Instalación
 
-1. **Gestión de múltiples cuentas de Toggl**: Añade y guarda varias cuentas de Toggl con sus tokens de API
-2. **Filtros avanzados**: Selecciona workspace, cliente, proyecto y tags para cada cuenta
-3. **Visualización consolidada**: Ver todos los resultados en una tabla con toda la información incluido el responsable
-
-## Instalación
-
-### Backend (Laravel)
+1. Clona o descarga este repositorio
+2. Instala las dependencias:
 
 ```bash
-cd backend
-composer install
-cp .env.example .env
-php artisan key:generate
-touch database/database.sqlite
-php artisan migrate
-php artisan serve
-```
-
-El backend estará disponible en `http://localhost:8000`
-
-### Frontend (Angular)
-
-```bash
-cd frontend
 npm install
-npm start
 ```
 
-El frontend estará disponible en `http://localhost:4200`
+3. Inicia el servidor de desarrollo:
 
-## Configuración
+```bash
+npm run dev
+```
 
-### Backend
+4. Abre tu navegador en `http://localhost:5173`
 
-1. Edita el archivo `.env` en el directorio `backend/`
-2. Configura la base de datos (por defecto SQLite)
+## 📝 Uso
 
-### Frontend
+### Añadir una cuenta de Toggl
 
-1. Si necesitas cambiar la URL de la API, edita `src/app/services/toggl.service.ts`
-2. La URL por defecto es `http://localhost:8000/api/toggl`
+1. Haz clic en "+ Añadir Cuenta"
+2. Ingresa un nombre para la cuenta (ej: "Mi Cuenta Personal")
+3. Ingresa tu API Token de Toggl
+4. Haz clic en "Guardar Cuenta"
 
-## Uso
+### Obtener tu API Token de Toggl
 
-1. Añade una o más cuentas de Toggl usando el token de API (puedes obtenerlo en [Toggl Profile](https://track.toggl.com/profile))
-2. Selecciona las cuentas que quieres usar
-3. Para cada cuenta, selecciona el workspace, cliente, proyecto y tags (todos opcionales excepto workspace)
-4. Selecciona el rango de fechas
-5. Haz clic en "Cargar Entradas de Tiempo" para ver los resultados consolidados
+1. Inicia sesión en [Toggl](https://track.toggl.com)
+2. Ve a tu perfil (arriba a la derecha)
+3. Selecciona "Profile settings"
+4. En la sección "API token", copia tu token
+5. Pega el token en la aplicación
 
-## Despliegue en Vercel
+### Configurar filtros
 
-Para desplegar en Vercel, sigue estos pasos:
+1. Selecciona una cuenta de las guardadas
+2. Elige un workspace (obligatorio)
+3. Opcionalmente selecciona cliente, proyecto y/o tag
+4. Opcionalmente establece fechas de inicio y fin
+5. Los resultados se cargan automáticamente
 
-1. El frontend Angular se puede desplegar directamente en Vercel
-2. El backend Laravel necesitará un servidor PHP. Considera usar:
-   - Vercel Serverless Functions (con algunas adaptaciones)
-   - O un servicio separado como Railway, Render, o Heroku
+### Añadir más cuentas
 
-## Tecnologías
+1. Selecciona otra cuenta de las guardadas
+2. Configura sus filtros
+3. Los resultados se combinarán automáticamente
 
-- **Backend**: Laravel 10, PHP 8.1+
-- **Frontend**: Angular 17
-- **Base de datos**: SQLite (desarrollo) / MySQL/PostgreSQL (producción)
-- **API Externa**: Toggl Track API v9
+## 🚢 Despliegue en Vercel
+
+Esta aplicación está lista para desplegarse en Vercel:
+
+1. Haz push de tu código a GitHub
+2. Ve a [Vercel](https://vercel.com)
+3. Importa tu repositorio
+4. Vercel detectará automáticamente que es un proyecto Vite
+5. Haz clic en "Deploy"
+
+La aplicación se desplegará automáticamente. No se necesitan variables de entorno para esta aplicación.
+
+## 🛠️ Tecnologías
+
+- **React 18** - Biblioteca UI
+- **TypeScript** - Tipado estático
+- **Vite** - Build tool y dev server
+- **Axios** - Cliente HTTP
+- **Toggl Track API v9** - API oficial de Toggl
+
+## 📄 Licencia
+
+MIT
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas. Siéntete libre de abrir un issue o pull request.
+
