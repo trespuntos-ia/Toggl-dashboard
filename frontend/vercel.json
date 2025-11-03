@@ -1,7 +1,7 @@
 {
-  "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/toggl-dashboard",
+  "buildCommand": "npm install && npm run build",
+  "outputDirectory": "dist/toggl-dashboard/browser",
+  "installCommand": "npm install",
   "rewrites": [
     {
       "source": "/(.*)",
