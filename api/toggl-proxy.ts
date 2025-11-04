@@ -70,7 +70,47 @@ export default async function handler(
       body: request.method === 'POST' ? JSON.stringify(request.body) : undefined,
     });
 
-    const data = await togglResponse.json();
+    // Leer la respuesta como texto primero
+    const responseText = await togglResponse.text();
+    
+    let data;
+    const contentType = togglResponse.headers.get('content-type') || '';
+    
+    if (contentType.includes('application/json') || responseText.trim().startsWith('{') || responseText.trim().startsWith('[')) {
+      // Intentar parsear como JSON
+      try {
+        data = JSON.parse(responseText);
+      } catch (e) {
+        console.error('Failed to parse JSON response:', responseText.substring(0, 200));
+        if (!togglResponse.ok) {
+          response.status(togglResponse.status).json({ 
+            error: 'Error from Toggl API',
+            message: responseText.substring(0, 200)
+          });
+          return;
+        }
+        response.status(500).json({ 
+          error: 'Invalid JSON response from Toggl API',
+          message: responseText.substring(0, 200)
+        });
+        return;
+      }
+    } else {
+      // No es JSON, devolver error
+      console.error('Non-JSON response from Toggl:', responseText.substring(0, 200));
+      if (!togglResponse.ok) {
+        response.status(togglResponse.status).json({ 
+          error: 'Error from Toggl API',
+          message: responseText.substring(0, 200)
+        });
+        return;
+      }
+      response.status(500).json({ 
+        error: 'Unexpected response format from Toggl API',
+        message: responseText.substring(0, 200)
+      });
+      return;
+    }
 
     if (!togglResponse.ok) {
       response.status(togglResponse.status).json(data);
