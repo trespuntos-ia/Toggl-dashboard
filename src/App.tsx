@@ -108,6 +108,7 @@ function App() {
           <AccountManager
             onAccountSelect={handleAccountSelect}
             selectedAccounts={selectedAccounts}
+            autoSelectNew={true}
           />
         </section>
 

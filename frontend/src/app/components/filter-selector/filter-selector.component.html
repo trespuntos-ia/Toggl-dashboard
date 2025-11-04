@@ -1,0 +1,101 @@
+<div class="filter-selector-container">
+  <h2>Configurar Filtros</h2>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div class="date-range">
+    <div class="form-group">
+      <label for="startDate">Fecha de inicio:</label>
+      <input
+        type="date"
+        id="startDate"
+        [(ngModel)]="startDate"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="endDate">Fecha de fin:</label>
+      <input
+        type="date"
+        id="endDate"
+        [(ngModel)]="endDate"
+        class="form-control"
+      />
+    </div>
+  </div>
+
+  <div class="accounts-config">
+    <div
+      *ngFor="let config of accountConfigs; let i = index"
+      class="account-config-card"
+    >
+      <h3>{{ config.account.name }}</h3>
+
+      <div class="form-group">
+        <label>Workspace:</label>
+        <select
+          [(ngModel)]="config.workspaceId"
+          (ngModelChange)="onWorkspaceChange(config)"
+          class="form-control"
+        >
+          <option [value]="null">Seleccionar workspace</option>
+          <option *ngFor="let workspace of config.workspaces" [value]="workspace.id">
+            {{ workspace.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="config.workspaceId">
+        <label>Cliente (opcional):</label>
+        <select
+          [(ngModel)]="config.clientId"
+          (ngModelChange)="onClientChange(config)"
+          class="form-control"
+        >
+          <option [value]="null">Todos los clientes</option>
+          <option *ngFor="let client of config.clients" [value]="client.id">
+            {{ client.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="config.workspaceId">
+        <label>Proyecto (opcional):</label>
+        <select
+          [(ngModel)]="config.projectId"
+          class="form-control"
+        >
+          <option [value]="null">Todos los proyectos</option>
+          <option *ngFor="let project of config.projects" [value]="project.id">
+            {{ project.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="config.workspaceId">
+        <label>Tag (opcional):</label>
+        <select
+          [(ngModel)]="config.tagId"
+          class="form-control"
+        >
+          <option [value]="null">Todos los tags</option>
+          <option *ngFor="let tag of config.tags" [value]="tag.id">
+            {{ tag.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button
+      class="btn btn-primary btn-large"
+      (click)="loadTimeEntries()"
+      [disabled]="!canLoadEntries() || loading"
+    >
+      {{ loading ? 'Cargando...' : 'Cargar Entradas de Tiempo' }}
+    </button>
+  </div>
+</div>

@@ -6,11 +6,13 @@ import './AccountManager.css';
 interface AccountManagerProps {
   onAccountSelect: (account: TogglAccount) => void;
   selectedAccounts: TogglAccount[];
+  autoSelectNew?: boolean;
 }
 
 export const AccountManager = ({
   onAccountSelect,
   selectedAccounts,
+  autoSelectNew = true,
 }: AccountManagerProps) => {
   const [accounts, setAccounts] = useState<TogglAccount[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -43,6 +45,11 @@ export const AccountManager = ({
     setAccountName('');
     setApiToken('');
     setShowAddForm(false);
+    
+    // Seleccionar automáticamente la cuenta nueva
+    if (autoSelectNew) {
+      onAccountSelect(newAccount);
+    }
   };
 
   const handleDeleteAccount = (accountId: string) => {

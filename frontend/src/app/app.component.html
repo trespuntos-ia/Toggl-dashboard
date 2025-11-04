@@ -1,0 +1,26 @@
+<div class="container">
+  <header>
+    <h1>Toggl Dashboard</h1>
+    <p>Gestiona múltiples cuentas de Toggl y visualiza tus tiempos de trabajo</p>
+  </header>
+
+  <main>
+    <section class="accounts-section">
+      <app-toggl-accounts
+        (accountsSelected)="onAccountsSelected($event)"
+      ></app-toggl-accounts>
+    </section>
+
+    <section class="filters-section" *ngIf="selectedAccounts.length > 0">
+      <app-filter-selector
+        [selectedAccounts]="selectedAccounts"
+        (filtersChanged)="onFiltersChanged($event)"
+        (timeEntriesLoaded)="onTimeEntriesLoaded($event)"
+      ></app-filter-selector>
+    </section>
+
+    <section class="results-section" *ngIf="timeEntries.length > 0">
+      <app-results-table [timeEntries]="timeEntries"></app-results-table>
+    </section>
+  </main>
+</div>

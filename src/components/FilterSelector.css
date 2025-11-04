@@ -38,6 +38,27 @@
   font-size: 0.9rem;
 }
 
+.filter-hint {
+  font-size: 0.75rem;
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.filter-message {
+  padding: 15px;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.filter-message p {
+  margin: 0;
+  color: #856404;
+  font-size: 0.9rem;
+}
+
 @media (max-width: 768px) {
   .filter-fields {
     grid-template-columns: 1fr;

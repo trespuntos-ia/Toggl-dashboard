@@ -1,0 +1,89 @@
+<div class="accounts-container">
+  <h2>Cuentas de Toggl</h2>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading && accounts.length === 0" class="loading">
+    Cargando cuentas...
+  </div>
+
+  <div *ngIf="!showAddForm && accounts.length === 0 && !loading" class="empty-state">
+    <p>No hay cuentas de Toggl configuradas.</p>
+    <button class="btn btn-primary" (click)="showAddAccountForm()">
+      Añadir Primera Cuenta
+    </button>
+  </div>
+
+  <div *ngIf="accounts.length > 0" class="accounts-list">
+    <div
+      *ngFor="let account of accounts"
+      class="account-card"
+      [class.selected]="isSelected(account.id)"
+      (click)="toggleAccountSelection(account.id)"
+    >
+      <div class="account-info">
+        <input
+          type="checkbox"
+          [checked]="isSelected(account.id)"
+          (click)="$event.stopPropagation()"
+          (change)="toggleAccountSelection(account.id)"
+        />
+        <span class="account-name">{{ account.name }}</span>
+      </div>
+      <button
+        class="btn btn-danger btn-small"
+        (click)="deleteAccount(account.id, $event)"
+        title="Eliminar cuenta"
+      >
+        ×
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="showAddForm" class="add-account-form">
+    <h3>Añadir Nueva Cuenta</h3>
+    <div class="form-group">
+      <label for="accountName">Nombre de la cuenta:</label>
+      <input
+        type="text"
+        id="accountName"
+        [(ngModel)]="newAccountName"
+        placeholder="Ej: Cuenta Personal"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="accountToken">Token de API de Toggl:</label>
+      <input
+        type="password"
+        id="accountToken"
+        [(ngModel)]="newAccountToken"
+        placeholder="Pega tu token de API aquí"
+        class="form-control"
+      />
+      <small class="help-text">
+        Puedes obtener tu token en: <a href="https://track.toggl.com/profile" target="_blank">Toggl Profile</a>
+      </small>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-primary" (click)="addAccount()" [disabled]="loading">
+        {{ loading ? 'Guardando...' : 'Guardar Cuenta' }}
+      </button>
+      <button class="btn btn-secondary" (click)="cancelAddAccount()" [disabled]="loading">
+        Cancelar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!showAddForm && accounts.length > 0" class="add-button-container">
+    <button class="btn btn-primary" (click)="showAddAccountForm()">
+      + Añadir Otra Cuenta
+    </button>
+  </div>
+
+  <div *ngIf="selectedAccountIds.length > 0" class="selected-info">
+    <p>{{ selectedAccountIds.length }} cuenta(s) seleccionada(s)</p>
+  </div>
+</div>

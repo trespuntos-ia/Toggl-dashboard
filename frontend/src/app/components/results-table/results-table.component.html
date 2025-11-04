@@ -1,0 +1,64 @@
+<div class="results-table-container">
+  <h2>Resultados</h2>
+
+  <div class="summary">
+    <div class="summary-item">
+      <span class="summary-label">Total de entradas:</span>
+      <span class="summary-value">{{ timeEntries.length }}</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">Tiempo total:</span>
+      <span class="summary-value">{{ formatDuration(getTotalDuration()) }}</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">Tiempo facturable:</span>
+      <span class="summary-value">{{ formatDuration(getTotalBillableDuration()) }}</span>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Cuenta</th>
+          <th>Descripción</th>
+          <th>Cliente</th>
+          <th>Proyecto</th>
+          <th>Inicio</th>
+          <th>Fin</th>
+          <th>Duración</th>
+          <th>Tags</th>
+          <th>Responsable</th>
+          <th>Facturable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of timeEntries">
+          <td>{{ entry.account_name }}</td>
+          <td>{{ entry.description || 'Sin descripción' }}</td>
+          <td>{{ entry.client_name || '-' }}</td>
+          <td>{{ entry.project_name || '-' }}</td>
+          <td>{{ formatDate(entry.start) }}</td>
+          <td>{{ entry.stop ? formatDate(entry.stop) : 'En curso' }}</td>
+          <td>{{ formatDuration(entry.duration) }}</td>
+          <td>
+            <span *ngIf="entry.tags && entry.tags.length > 0" class="tags">
+              <span *ngFor="let tag of entry.tags" class="tag">{{ tag }}</span>
+            </span>
+            <span *ngIf="!entry.tags || entry.tags.length === 0">-</span>
+          </td>
+          <td>{{ entry.user_name || entry.user_id || '-' }}</td>
+          <td>
+            <span [class.billable]="entry.billable" [class.not-billable]="!entry.billable">
+              {{ entry.billable ? 'Sí' : 'No' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="timeEntries.length === 0" class="empty-results">
+    <p>No se encontraron entradas de tiempo con los filtros seleccionados.</p>
+  </div>
+</div>

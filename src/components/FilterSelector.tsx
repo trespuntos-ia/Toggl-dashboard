@@ -110,21 +110,29 @@ export const FilterSelector = ({
 
       {loading && <div className="loading">Cargando...</div>}
 
+      {workspaces.length === 0 && !loading && (
+        <div className="filter-message">
+          <p>⚠️ No se pudieron cargar los workspaces. Verifica que el API token sea correcto.</p>
+        </div>
+      )}
+
       <div className="filter-fields">
         <div className="filter-field">
-          <label>Workspace</label>
+          <label>Workspace *</label>
           <select
             value={selectedWorkspace || ''}
             onChange={(e) => setSelectedWorkspace(e.target.value ? Number(e.target.value) : undefined)}
             className="select"
+            disabled={loading}
           >
-            <option value="">Todos</option>
+            <option value="">Selecciona un workspace</option>
             {workspaces.map((ws) => (
               <option key={ws.id} value={ws.id}>
                 {ws.name}
               </option>
             ))}
           </select>
+          <small className="filter-hint">* Requerido para cargar resultados</small>
         </div>
 
         {selectedWorkspace && (
