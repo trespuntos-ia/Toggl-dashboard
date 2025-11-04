@@ -1,0 +1,152 @@
+.latest-entries {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 24px;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+/* Botones */
+.view-all-link {
+  background: none;
+  border: none;
+  color: #10b981;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  padding: 0;
+}
+
+.latest-entries-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.latest-entries-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.view-all-link {
+  background: none;
+  border: none;
+  color: #10b981;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.view-all-link:hover {
+  color: #34d399;
+  text-decoration: underline;
+}
+
+.entries-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.entry-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #2a2a2a;
+  border-radius: 8px;
+  border: 1px solid #333;
+  transition: all 0.2s ease;
+}
+
+.entry-card:hover {
+  border-color: #444;
+  background: #2f2f2f;
+}
+
+.entry-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.entry-description {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.entry-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+}
+
+.entry-tag {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.project-tag {
+  background: #10b981;
+  color: #fff;
+}
+
+.entry-user {
+  color: #aaa;
+}
+
+.entry-date {
+  color: #888;
+}
+
+.entry-hours {
+  color: #10b981;
+  font-weight: 600;
+  font-size: 1.1rem;
+  min-width: 60px;
+  text-align: right;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .entry-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .entry-hours {
+    align-self: flex-end;
+  }
+
+  .entry-details {
+    flex-wrap: wrap;
+  }
+}
+

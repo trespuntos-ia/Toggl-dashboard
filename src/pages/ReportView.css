@@ -1,0 +1,119 @@
+.report-view {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.report-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 40px;
+  padding: 30px 20px;
+}
+
+.report-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.report-client-name {
+  font-size: 1.3rem;
+  margin: 8px 0;
+  opacity: 0.9;
+}
+
+.report-status {
+  margin: 20px 0;
+}
+
+.status-badge {
+  display: inline-block;
+  background: #10b981;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.report-intro {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-top: 16px;
+}
+
+.report-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  margin-top: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.875rem;
+}
+
+.footer-info {
+  display: flex;
+  gap: 16px;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.loading,
+.error-message {
+  text-align: center;
+  padding: 60px 20px;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.error-message {
+  background: rgba(239, 68, 68, 0.2);
+  border-radius: 12px;
+  border: 2px solid #ef4444;
+}
+
+@media (max-width: 768px) {
+  .report-footer {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .footer-info {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+

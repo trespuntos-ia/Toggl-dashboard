@@ -1,0 +1,183 @@
+.charts-section {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 24px;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+.chart-card {
+  background: #2a2a2a;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #333;
+}
+
+.chart-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.chart-card h3 {
+  margin: 0 0 16px 0;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.chart-container {
+  margin-bottom: 16px;
+}
+
+.chart-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.legend-label {
+  flex: 1;
+  color: #aaa;
+}
+
+.legend-value {
+  color: #fff;
+  font-weight: 600;
+}
+
+.chart-total {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #333;
+  font-weight: 600;
+  color: #10b981;
+  text-align: center;
+}
+
+.team-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.team-member-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.member-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.member-name {
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.member-role {
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.member-hours-bar {
+  flex: 1;
+  height: 24px;
+  background: #1f1f1f;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.member-hours-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.member-hours-value {
+  min-width: 60px;
+  text-align: right;
+  color: #10b981;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.chart-summary {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #333;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.summary-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.trend-increasing {
+  color: #10b981;
+}
+
+.trend-decreasing {
+  color: #ef4444;
+}
+
+.trend-stable {
+  color: #f59e0b;
+}
+
+@media (max-width: 768px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card.full-width {
+    grid-column: 1;
+  }
+
+  .chart-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+

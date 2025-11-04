@@ -28,7 +28,7 @@ export const FilterSelector = ({
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
 
-  const togglService = new TogglService(account.apiToken);
+  const togglService = new TogglService(account.apiToken, account.id);
 
   useEffect(() => {
     loadWorkspaces();
@@ -49,8 +49,14 @@ export const FilterSelector = ({
 
   useEffect(() => {
     if (selectedWorkspace) {
-      updateFilter();
+      // Debounce para evitar llamadas excesivas (esperar 300ms después del último cambio)
+      const timeout = setTimeout(() => {
+        updateFilter();
+      }, 300);
+
+      return () => clearTimeout(timeout);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedWorkspace, selectedClient, selectedProject, selectedTag, startDate, endDate]);
 
   const loadWorkspaces = async () => {

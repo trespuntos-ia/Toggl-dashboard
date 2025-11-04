@@ -23,12 +23,16 @@ export const AccountManager = ({
     loadAccounts();
   }, []);
 
-  const loadAccounts = () => {
-    const savedAccounts = storageService.getAccounts();
-    setAccounts(savedAccounts);
+  const loadAccounts = async () => {
+    try {
+      const savedAccounts = await storageService.getAccounts();
+      setAccounts(savedAccounts);
+    } catch (error) {
+      console.error('Error loading accounts:', error);
+    }
   };
 
-  const handleAddAccount = () => {
+  const handleAddAccount = async () => {
     if (!accountName.trim() || !apiToken.trim()) {
       alert('Por favor completa todos los campos');
       return;
@@ -40,22 +44,32 @@ export const AccountManager = ({
       apiToken: apiToken.trim(),
     };
 
-    storageService.addAccount(newAccount);
-    setAccounts([...accounts, newAccount]);
-    setAccountName('');
-    setApiToken('');
-    setShowAddForm(false);
-    
-    // Seleccionar automáticamente la cuenta nueva
-    if (autoSelectNew) {
-      onAccountSelect(newAccount);
+    try {
+      await storageService.addAccount(newAccount);
+      setAccounts([...accounts, newAccount]);
+      setAccountName('');
+      setApiToken('');
+      setShowAddForm(false);
+      
+      // Seleccionar automáticamente la cuenta nueva
+      if (autoSelectNew) {
+        onAccountSelect(newAccount);
+      }
+    } catch (error) {
+      console.error('Error adding account:', error);
+      alert('Error al guardar la cuenta. Intenta de nuevo.');
     }
   };
 
-  const handleDeleteAccount = (accountId: string) => {
+  const handleDeleteAccount = async (accountId: string) => {
     if (confirm('¿Estás seguro de que quieres eliminar esta cuenta?')) {
-      storageService.removeAccount(accountId);
-      setAccounts(accounts.filter((acc: TogglAccount) => acc.id !== accountId));
+      try {
+        await storageService.removeAccount(accountId);
+        setAccounts(accounts.filter((acc: TogglAccount) => acc.id !== accountId));
+      } catch (error) {
+        console.error('Error deleting account:', error);
+        alert('Error al eliminar la cuenta. Intenta de nuevo.');
+      }
     }
   };
 
