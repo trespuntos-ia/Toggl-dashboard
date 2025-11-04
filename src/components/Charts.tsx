@@ -12,7 +12,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts';
 import type { ReportResult } from '../types';
@@ -99,7 +98,7 @@ export const Charts = ({ result }: ChartsProps) => {
                     }}
                   />
                   <Bar dataKey="hours" fill="#10b981" radius={[8, 8, 0, 0]}>
-                    {result.distribution_by_team_member.map((entry, index) => (
+                    {result.distribution_by_team_member.map((_entry, index) => (
                       <Cell
                         key={`cell-${index}`}
                         fill={COLORS[index % COLORS.length]}

@@ -1,5 +1,5 @@
 import { supabaseService, getSupabaseClient } from './supabaseService';
-import type { Report, ReportAccountConfig, ReportResult, HistoricalPDFData } from '../types';
+import type { Report, ReportAccountConfig, ReportResult, HistoricalPDFData, TimeEntryResult } from '../types';
 import { ReportCalculations } from './reportCalculations';
 import { TogglService } from './togglService';
 
@@ -188,7 +188,6 @@ export const reportService = {
 
     // Calcular estadísticas
     const totalDuration = allEntries.reduce((sum, entry) => sum + entry.duration, 0);
-    const totalHours = totalDuration / 3600;
 
     // Calcular resumen de horas
     const hoursSummary = report.contracted_hours

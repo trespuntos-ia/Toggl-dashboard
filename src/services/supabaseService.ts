@@ -18,11 +18,12 @@ export const getSupabaseClient = (): SupabaseClient | null => {
   return supabase;
 };
 
-const checkSupabase = (): void => {
-  if (!getSupabaseClient()) {
-    throw new Error('Supabase not configured');
-  }
-};
+// Helper function (commented out but kept for future use)
+// const checkSupabase = (): void => {
+//   if (!getSupabaseClient()) {
+//     throw new Error('Supabase not configured');
+//   }
+// };
 
 // Tipos para las tablas de Supabase
 interface TogglAccountDB {
@@ -34,15 +35,16 @@ interface TogglAccountDB {
   updated_at?: string;
 }
 
-interface ApiCacheEntry {
-  id?: number;
-  cache_key: string; // formato: "account_id:endpoint:params"
-  account_id: string;
-  endpoint: string;
-  data: any;
-  expires_at: string;
-  created_at?: string;
-}
+// Interface no utilizada actualmente, pero mantenida para referencia futura
+// interface ApiCacheEntry {
+//   id?: number;
+//   cache_key: string; // formato: "account_id:endpoint:params"
+//   account_id: string;
+//   endpoint: string;
+//   data: any;
+//   expires_at: string;
+//   created_at?: string;
+// }
 
 interface TimeEntryResultDB {
   id?: number;

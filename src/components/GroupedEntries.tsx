@@ -18,20 +18,13 @@ interface GroupedEntry {
 interface GroupedEntriesProps {
   groupedEntries: GroupedEntry[];
   totalHours: number;
-  onFilterChange?: (filters: {
-    projects?: string[];
-    tags?: string[];
-    dates?: { start?: string; end?: string };
-  }) => void;
 }
 
 export const GroupedEntries = ({
   groupedEntries,
   totalHours,
-  onFilterChange,
 }: GroupedEntriesProps) => {
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
-  const [allExpanded, setAllExpanded] = useState(false);
 
   const toggleGroup = (description: string) => {
     const newExpanded = new Set(expandedGroups);
@@ -46,12 +39,10 @@ export const GroupedEntries = ({
   const expandAll = () => {
     const allDescriptions = new Set(groupedEntries.map((g) => g.description));
     setExpandedGroups(allDescriptions);
-    setAllExpanded(true);
   };
 
   const collapseAll = () => {
     setExpandedGroups(new Set());
-    setAllExpanded(false);
   };
 
   const formatDate = (dateString: string): string => {
