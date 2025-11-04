@@ -8,7 +8,7 @@ export const reportService = {
   async createReport(report: Omit<Report, 'id' | 'created_at' | 'updated_at'>): Promise<Report> {
     const client = getSupabaseClient();
     if (!client) {
-      throw new Error('Supabase not configured');
+      throw new Error('Supabase no está configurado. Por favor, configura las variables de entorno VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en Vercel.');
     }
 
     const { data, error } = await client

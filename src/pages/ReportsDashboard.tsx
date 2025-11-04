@@ -21,8 +21,13 @@ export const ReportsDashboard = () => {
     try {
       const data = await reportService.getAllReports();
       setReports(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error loading reports:', error);
+      const errorMessage = error?.message || 'Error desconocido';
+      if (errorMessage.includes('Supabase no está configurado') || errorMessage.includes('Supabase not configured')) {
+        // No mostrar alerta aquí, solo mostrar mensaje en la UI
+        console.warn('Supabase no configurado. Ver VERCEL_ENV_SETUP.md para configurar.');
+      }
     } finally {
       setLoading(false);
     }
@@ -94,10 +99,20 @@ export const ReportsDashboard = () => {
       </div>
 
       <div className="reports-list">
-        {reports.length === 0 ? (
+        {reports.length === 0 && !loading ? (
           <div className="empty-state">
             <p>No hay reportes creados aún.</p>
             <p>Crea tu primer reporte para empezar.</p>
+            <div style={{ marginTop: '20px', padding: '15px', background: '#fff3cd', borderRadius: '8px', border: '1px solid #ffc107' }}>
+              <p style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#856404' }}>
+                ⚠️ Configuración Requerida
+              </p>
+              <p style={{ margin: '0', fontSize: '0.9rem', color: '#856404' }}>
+                Para crear reportes, necesitas configurar Supabase en Vercel.
+                <br />
+                Ver <code>VERCEL_ENV_SETUP.md</code> para instrucciones.
+              </p>
+            </div>
           </div>
         ) : (
           reports.map((report) => (

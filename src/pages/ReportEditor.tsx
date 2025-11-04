@@ -169,9 +169,25 @@ export const ReportEditor = () => {
       await reportService.generateReportResult(reportId);
 
       navigate('/');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving report:', error);
-      alert('Error al guardar el reporte');
+      const errorMessage = error?.message || 'Error desconocido';
+      
+      if (errorMessage.includes('Supabase no está configurado') || errorMessage.includes('Supabase not configured')) {
+        alert(
+          '⚠️ Supabase no está configurado.\n\n' +
+          'Para usar esta funcionalidad, necesitas configurar las variables de entorno en Vercel:\n\n' +
+          '1. Ve a tu proyecto en Vercel Dashboard\n' +
+          '2. Settings → Environment Variables\n' +
+          '3. Añade:\n' +
+          '   - VITE_SUPABASE_URL\n' +
+          '   - VITE_SUPABASE_ANON_KEY\n' +
+          '4. Haz redeploy del proyecto\n\n' +
+          'Ver VERCEL_ENV_SETUP.md para más detalles.'
+        );
+      } else {
+        alert(`Error al guardar el reporte: ${errorMessage}`);
+      }
     } finally {
       setSaving(false);
     }
