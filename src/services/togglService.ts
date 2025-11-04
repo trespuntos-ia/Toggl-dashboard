@@ -15,12 +15,31 @@ export class TogglService {
     const queryParams = new URLSearchParams({
       token: this.apiToken,
       endpoint: endpoint,
-      ...params,
     });
     
+    // Añadir parámetros adicionales si existen
+    if (params) {
+      Object.keys(params).forEach(key => {
+        if (params[key] !== undefined && params[key] !== null) {
+          queryParams.append(key, String(params[key]));
+        }
+      });
+    }
+    
     const url = `${PROXY_URL}?${queryParams.toString()}`;
-    const response = await axios.get(url);
-    return response.data;
+    try {
+      const response = await axios.get(url);
+      return response.data;
+    } catch (error: any) {
+      // Pasar el error con más información
+      if (error.response) {
+        const errorData = error.response.data;
+        const errorWithContext = new Error(errorData?.message || errorData?.error || error.message);
+        (errorWithContext as any).response = { data: errorData };
+        throw errorWithContext;
+      }
+      throw error;
+    }
   }
 
   async getWorkspaces(): Promise<Workspace[]> {

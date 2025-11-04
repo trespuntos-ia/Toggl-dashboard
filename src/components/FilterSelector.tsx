@@ -19,6 +19,8 @@ export const FilterSelector = ({
   const [projects, setProjects] = useState<Project[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [clientsError, setClientsError] = useState<string | null>(null);
   const [selectedWorkspace, setSelectedWorkspace] = useState<number | undefined>();
   const [selectedClient, setSelectedClient] = useState<number | undefined>();
   const [selectedProject, setSelectedProject] = useState<number | undefined>();
@@ -53,12 +55,18 @@ export const FilterSelector = ({
 
   const loadWorkspaces = async () => {
     setLoading(true);
+    setError(null);
     try {
       const workspacesData = await togglService.getWorkspaces();
       setWorkspaces(workspacesData);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error loading workspaces:', error);
-      alert('Error al cargar los workspaces. Verifica que el API token sea correcto.');
+      const errorMessage = error?.response?.data?.message || error?.message || 'Error desconocido';
+      if (errorMessage.includes('limit') || errorMessage.includes('quota')) {
+        setError('⚠️ Has alcanzado el límite de llamadas a la API de Toggl. Espera unos minutos antes de intentar de nuevo.');
+      } else {
+        setError('Error al cargar los workspaces. Verifica que el API token sea correcto.');
+      }
     } finally {
       setLoading(false);
     }
@@ -66,15 +74,31 @@ export const FilterSelector = ({
 
   const loadWorkspaceData = async (workspaceId: number) => {
     setLoading(true);
+    setClientsError(null);
     try {
       const [clientsData, projectsData, tagsData] = await Promise.all([
-        togglService.getClients(workspaceId),
-        togglService.getProjects(workspaceId),
-        togglService.getTags(workspaceId),
+        togglService.getClients(workspaceId).catch(err => {
+          console.error('Error loading clients:', err);
+          const errorMsg = err?.response?.data?.message || err?.message || '';
+          if (errorMsg.includes('limit') || errorMsg.includes('quota')) {
+            setClientsError('Límite de API alcanzado. Espera unos minutos.');
+          } else {
+            setClientsError('Error al cargar clientes. Puede que este workspace no tenga clientes.');
+          }
+          return [];
+        }),
+        togglService.getProjects(workspaceId).catch(err => {
+          console.error('Error loading projects:', err);
+          return [];
+        }),
+        togglService.getTags(workspaceId).catch(err => {
+          console.error('Error loading tags:', err);
+          return [];
+        }),
       ]);
-      setClients(clientsData);
-      setProjects(projectsData);
-      setTags(tagsData);
+      setClients(clientsData || []);
+      setProjects(projectsData || []);
+      setTags(tagsData || []);
     } catch (error) {
       console.error('Error loading workspace data:', error);
     } finally {
@@ -110,7 +134,13 @@ export const FilterSelector = ({
 
       {loading && <div className="loading">Cargando...</div>}
 
-      {workspaces.length === 0 && !loading && (
+      {error && (
+        <div className="filter-message">
+          <p>{error}</p>
+        </div>
+      )}
+
+      {workspaces.length === 0 && !loading && !error && (
         <div className="filter-message">
           <p>⚠️ No se pudieron cargar los workspaces. Verifica que el API token sea correcto.</p>
         </div>
@@ -143,6 +173,7 @@ export const FilterSelector = ({
                 value={selectedClient || ''}
                 onChange={(e) => setSelectedClient(e.target.value ? Number(e.target.value) : undefined)}
                 className="select"
+                disabled={loading}
               >
                 <option value="">Todos</option>
                 {clients.map((client) => (
@@ -151,6 +182,16 @@ export const FilterSelector = ({
                   </option>
                 ))}
               </select>
+              {clientsError && (
+                <small className="filter-hint" style={{ color: '#dc3545' }}>
+                  {clientsError}
+                </small>
+              )}
+              {!clientsError && clients.length === 0 && !loading && (
+                <small className="filter-hint">
+                  Este workspace no tiene clientes configurados
+                </small>
+              )}
             </div>
 
             <div className="filter-field">
@@ -159,6 +200,7 @@ export const FilterSelector = ({
                 value={selectedProject || ''}
                 onChange={(e) => setSelectedProject(e.target.value ? Number(e.target.value) : undefined)}
                 className="select"
+                disabled={loading}
               >
                 <option value="">Todos</option>
                 {filteredProjects.map((project) => (
@@ -167,6 +209,11 @@ export const FilterSelector = ({
                   </option>
                 ))}
               </select>
+              {!loading && filteredProjects.length === 0 && (
+                <small className="filter-hint">
+                  {selectedClient ? 'No hay proyectos para este cliente' : 'Este workspace no tiene proyectos configurados'}
+                </small>
+              )}
             </div>
 
             <div className="filter-field">
@@ -175,6 +222,7 @@ export const FilterSelector = ({
                 value={selectedTag || ''}
                 onChange={(e) => setSelectedTag(e.target.value ? Number(e.target.value) : undefined)}
                 className="select"
+                disabled={loading}
               >
                 <option value="">Todos</option>
                 {tags.map((tag) => (
@@ -183,6 +231,11 @@ export const FilterSelector = ({
                   </option>
                 ))}
               </select>
+              {!loading && tags.length === 0 && (
+                <small className="filter-hint">
+                  Este workspace no tiene tags configurados
+                </small>
+              )}
             </div>
           </>
         )}
